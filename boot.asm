@@ -3,7 +3,9 @@ BITS 16
 
 Jmp start
 
-msg: db "hello world", 0x0D, 0x0A, 0
+msg: db "Vogaissss", 0x0D, 0x0A, 0
+vogais: db "aeiouAEIOU"
+n_vogais: dw $-vogais
 
 start:
     xor ax, ax
@@ -16,11 +18,53 @@ start:
 
     mov si, msg
     call print_string
+    mov si, msg
+    call count_vogal
 
-    mov ax, 101
+    mov ax, cx
     call print_number
 end:
     jmp $ ; halt
+
+count_vogal:
+    xor cx, cx 
+.loop:
+    lodsb ; mov al, byte[si],  inc si
+    or al, al
+    jz .done
+
+    
+    mov bl, 'a'
+    xor bl, al
+    jz .inc
+
+    mov bl, 'e'
+    xor bl, al
+    jz .inc
+
+    mov bl, 'i'
+    xor bl, al
+    jz .inc
+
+    mov bl, 'o'
+    xor bl, al
+    jz .inc
+
+    mov bl, 'u'
+    xor bl, al
+    jz .inc
+
+    jmp .continue
+
+.inc:
+    inc cl
+    jmp .loop
+
+.continue:
+
+    jmp .loop
+.done:
+    ret
 
 print_string:
 .loop:

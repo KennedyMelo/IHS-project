@@ -3,9 +3,9 @@ BITS 16
 
 Jmp start
 
-msg: db "Vogaissss", 0x0D, 0x0A, 0
-vogais: db "aeiouAEIOU"
-n_vogais: dw $-vogais
+msg: db "Teste da FrAsE Com Vogais", 0x0D, 0x0A, 0
+vogais: db "aeiouAEIOU", 0
+
 
 start:
     xor ax, ax
@@ -32,35 +32,21 @@ count_vogal:
     lodsb ; mov al, byte[si],  inc si
     or al, al
     jz .done
+    lea bx, [vogais] ; dx aponta para início de n_vogais
+.loop2:
+    mov dl, [bx]
+    inc bx
 
+    or dl, dl
+    jz .end_loop2
+
+    xor dl, al
+    jnz .loop2
     
-    mov bl, 'a'
-    xor bl, al
-    jz .inc
+    inc cx
+    jmp .loop2
 
-    mov bl, 'e'
-    xor bl, al
-    jz .inc
-
-    mov bl, 'i'
-    xor bl, al
-    jz .inc
-
-    mov bl, 'o'
-    xor bl, al
-    jz .inc
-
-    mov bl, 'u'
-    xor bl, al
-    jz .inc
-
-    jmp .continue
-
-.inc:
-    inc cl
-    jmp .loop
-
-.continue:
+.end_loop2:
 
     jmp .loop
 .done:

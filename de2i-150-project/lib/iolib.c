@@ -15,12 +15,14 @@
 static int fd, retval;
 
 void print_buf(unsigned char* buf, unsigned int sz) {
-#ifndef MOCK
 	for(int i = 0; i < sz; i++) {
 		printf("%X ", buf[i]);
 	}
 
 	putchar('\n');
+#ifndef MOCK
+#else
+    printf("[print_buf] %p  %u\n", buf, sz);
 #endif
 }
 
@@ -38,6 +40,9 @@ int set_green_led(unsigned char* arr) {
 	retval = write(fd, &mask, sizeof(mask));
 	printf("wrote %d bytes\n", retval);
 	return retval;
+
+#else
+    printf("[set_green_led] %s\n", arr);
 #endif
 }
 
@@ -55,6 +60,8 @@ int set_red_led(unsigned char* arr) {
 	retval = write(fd, &mask, sizeof(mask));
 	printf("wrote %d bytes\n", retval);
 	return retval;
+#else
+    printf("[set_red_led] %s\n", arr);
 #endif
 }
 
@@ -68,6 +75,10 @@ unsigned char read_push_btn(int idx) {
 	retval = read(fd, &c, sizeof(c));
 
 	return (c & (1 << idx)) ? 0 : 1;
+
+#else
+    printf("[read_push_btn] %d\n", idx);
+	return (idx & 1) ? 0 : 1;
 #endif
 }
 
@@ -80,6 +91,9 @@ unsigned char read_switch(int idx) {
 	retval = read(fd, &x, sizeof(x));
 
 	return (x & (1 << idx)) ? 1 : 0;
+#else
+    printf("[read_switch] %d\n", idx);
+	return (idx & 1) ? 0 : 1;
 #endif
 }
 
@@ -87,6 +101,8 @@ void write_display(unsigned int data, int display) {
 #ifdef MOCK
 	ioctl(fd, display ? WR_DISPLAY_R : WR_DISPLAY_7_SEG);
 	retval = write(fd, &data, sizeof(data));
+#else
+    printf("[write_display] data = %d, display = %d\n", data, display);
 #endif
 }
 
@@ -98,12 +114,16 @@ int init_io() {
 	}
 
     return 0;
+#else
+    printf("[init_io]\n");
 #endif
 }
 
 void end_io() {
 #ifndef MOCK
 	close(fd);
+#else
+    printf("[end_io]\n");
 #endif
 }
 

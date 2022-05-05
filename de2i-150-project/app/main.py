@@ -42,6 +42,17 @@ def set_red_leds(leds_array):
     ptr = ctypes.cast(buf, ctypes.POINTER(ctypes.c_int8))
     c_iolib.set_red_led(ptr)
 
+def c_print_buf(array):
+    n = len(array)
+    buf = (ctypes.c_int8*(n + 1))()
+    buf[n] = 0
+    for i, x in enumerate(array):
+        buf[i] = ctypes.c_int8(x)
+
+    ptr = ctypes.cast(buf, ctypes.POINTER(ctypes.c_int8))
+    c_iolib.print_buf(ptr, ctypes.c_int32(n))
+
 if __name__ == '__main__':
 
     print(f'btn {read_push_btn(10)}, switch {read_swich(5)}')
+    c_print_buf([ord(x) for x in "Hello there"])

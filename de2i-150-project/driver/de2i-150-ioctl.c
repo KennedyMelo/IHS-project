@@ -82,7 +82,8 @@ static struct cdev my_device;
 /* device data */
 
 static void* display_7_seg = NULL;
-static void* inport = NULL;
+static void* switches = NULL;
+static void* export = NULL;
 static void* buttons = NULL;
 
 static void* read_pointer = NULL;
@@ -92,11 +93,12 @@ static void* red_leds = NULL;
 static void* green_leds = NULL;
 
 static const char* perf_names[] = {
-	"inport",
+	"switches",
 	"buttons",
 	"display_7_seg",
 	"red_leds",
 	"green_leds"
+	"display_r"
 };
 static int write_name_index = 2 + 1;
 static int read_name_index = 0;
@@ -229,7 +231,7 @@ static long int my_ioctl(struct file*, unsigned int cmd, unsigned long arg)
 {
 	switch(cmd){
 	case RD_SWITCHES:
-		read_pointer = inport;
+		read_pointer = switches;
 		read_name_index = 0;
 		printk("my_driver: updated read pointer to %s\n", perf_names[read_name_index]);
 		break;
@@ -254,6 +256,13 @@ static long int my_ioctl(struct file*, unsigned int cmd, unsigned long arg)
 		write_name_index = 4;
 		printk("my_driver: updated write pointer to %s\n", perf_names[write_name_index]);
 		break;
+
+	case WR_DISPLAY_R:
+        write_pointer = export;
+		write_name_index = 4;
+		printk("my_driver: updated write pointer to %s\n", perf_names[write_name_index]);
+		break;
+
 	default:
 		printk("my_driver: unknown ioctl command: 0x%X\n", cmd);
 	}
@@ -278,16 +287,16 @@ static int my_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
 	printk("my_driver: PCI device resources start at bar 0: 0x%lx\n", resource);
 	
 
-	inport = ioremap(resource + 0xC020, 0x20);
-	buttons = ioremap(resource + 0xC0A0, 0x20);
-	display_7_seg = ioremap(resource + 0xC040, 0x20);
-	red_leds = ioremap(resource + 0xC060, 0x20);
-	green_leds = ioremap(resource + 0xC080, 0x20);
+	switches = ioremap(resource + 0xC040, 0x20);
+	export = ioremap(resource + 0xC000, 0x20);
 
-    // @TODO: Handle figure this out.
-	//export = ioremap(resource + 0xC000, 0x20);
+	buttons = ioremap(resource + 0xC080, 0x20);
+	display_7_seg = ioremap(resource + 0xC140, 0x20);
+	red_leds = ioremap(resource + 0xC0B0, 0x20);
+	green_leds = ioremap(resource + 0xC0F0, 0x20);
 
-	read_pointer = inport; // default read peripheral pointer
+
+	read_pointer = switches; // default read peripheral pointer
 	write_pointer = display_7_seg; // default write peripheral pointer
 
 	return 0;
@@ -299,7 +308,7 @@ static void my_pci_remove(struct pci_dev *dev)
 	write_pointer = NULL;
 
 	iounmap(display_7_seg);
-	iounmap(inport);
+	iounmap(switches);
 	iounmap(buttons);
 	pci_disable_device(dev);
 }

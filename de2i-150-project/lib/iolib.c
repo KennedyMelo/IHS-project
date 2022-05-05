@@ -22,7 +22,7 @@ void print_buf(unsigned char* buf, unsigned int sz) {
 	putchar('\n');
 #ifndef MOCK
 #else
-    printf("[print_buf] %p  %u\n", buf, sz);
+    printf("[print_buf] %p %s %u\n", buf, buf, sz);
 #endif
 }
 

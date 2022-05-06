@@ -1,58 +1,46 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
 body{
-    margin-top: 10px;
     background-color: #e5e5e5;
     font-family:'Courier New', Courier, monospace;
 }
-#switchesBox{
-    position: relative;
-    height: 220px;
+
+.container{
+    margin: 15px;
     
-    background-color: #c4c4c4;
 }
-
-#pushButtonBox {
-    position: relative;
-    top: 30px;
-    width: 50%;
-    height: 220px;
+.container > div{
     background-color: #c4c4c4;
-}
-
-.title {
-    color: black;
+    padding: 10px;
     margin: 10px;
-    
 }
-
-#ledsBox{
-    position: relative;
-    top: 60px;
-    background-color: #c4c4c4;
-    height: 260px;
-    width: 50%;
+.boxHeight{
+    height: 180px;
 }
-
-#redLedsDiv{
-    position: inherit;
-    background-color: c4c4c4;
-    border-width: 50px;
-    left: 50%;
-    top: -107%;
-    width: inherit;
-    height: 100%;
-}
-#greenLedsDiv {
-    position: relative;
-    background-color: c4c4c4;
-    width: 50%;
-    height: inherit;
+.boxWidth{
+    width: 45%;
 }
 #sevenSegmentsBox{
-    position:fixed;
-    top: 285px;
-    left: 53%; 
-    background-color: #c4c4c4;
-    height:530px;
-    width:46%;
+    height: 370px;
+    float: right;
+    
+}
+.contentClass{
+    /* background-color: red; */
+    margin: 40px 10px;
+}
 
+table{
+    /* background-color: yellow; */
+    text-align: center;
+}
+#switchesBox td{
+    padding: 5px 15px;
+}
+
+#switchesBox img{
+    width: 30px;
+    height: 45px;
 }

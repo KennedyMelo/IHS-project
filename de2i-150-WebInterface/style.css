@@ -47,7 +47,13 @@ table{
 #pushButtonBox td{
     padding: 5px 35px;
 }
-
+#ledsBox td{
+    padding: 4px 8px;
+}
+#greenLedsDiv{
+    float: left;
+    width: 50%;    
+}
 
 
 .circle{
@@ -66,6 +72,12 @@ table{
 }
 .darkGreen{
     background-color: darkgreen;
+}
+.red{
+    background-color: red;
+}
+.darkRed{
+    background-color: darkred;
 }
 .white{
     background-color: white;

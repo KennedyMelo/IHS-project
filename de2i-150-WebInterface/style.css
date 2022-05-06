@@ -54,8 +54,25 @@ table{
     float: left;
     width: 50%;    
 }
-
-
+.boxForm{
+    margin: 50px 0px;
+}
+input[type=text]{
+    background-color: #e5e5e5;
+    height: 25px;
+    width: 300px;
+    font-size: 20px;
+}
+input[type=submit]{
+    background-color: #a4a4a4;
+    padding: 5px 20px;
+    margin-left: 223px;
+    margin-top: 10px;
+}
+input{
+    display: block;
+    border: none;
+}
 .circle{
     width: 35px;
     height: 35px;

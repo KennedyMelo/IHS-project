@@ -44,3 +44,29 @@ table{
     width: 30px;
     height: 45px;
 }
+#pushButtonBox td{
+    padding: 5px 35px;
+}
+
+
+
+.circle{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+.circleBorder{
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 15px solid black;
+}
+.lightGreen{
+    background-color: lightgreen;
+}
+.darkGreen{
+    background-color: darkgreen;
+}
+.white{
+    background-color: white;
+}

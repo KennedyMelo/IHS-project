@@ -1,0 +1,28 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    background-color: #e5e5e5;
+    font-family:'Courier New', Courier, monospace;
+}
+
+.container{
+    background-color: red; 
+    margin: 15px;
+    
+}
+.container > div{
+    background-color: #c4c4c4;
+    padding: 10px;
+    margin: 10px;
+}
+.boxHeight{
+    height: 100px;
+}
+#switchesBox{
+    width: 100%;
+}
+#sevenSegmentsBox{
+    height: 200px;
+}

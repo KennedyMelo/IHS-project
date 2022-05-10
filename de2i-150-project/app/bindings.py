@@ -14,7 +14,7 @@ def end_io():
 def read_push_btn(idx):
     return c_iolib.read_push_btn(ctypes.c_int32(idx))
 
-def read_swich(idx):
+def read_switch(idx):
     return c_iolib.read_switch(ctypes.c_int32(idx))
 
 def write_display(data : int, left : bool):

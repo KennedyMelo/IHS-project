@@ -1,4 +1,4 @@
-all: build run
+all: clean build run
 
 build:
 	cd ./driver && $(MAKE) all
@@ -12,5 +12,5 @@ run:
 	cd ./app && bash -c "python server.py"
 
 clean:
-	cd ./driver && $(MAKE) clean
-	cd ./lib && $(MAKE) clean
+	cd ./driver && $(MAKE) clean || true
+	cd ./lib && $(MAKE) clean || true

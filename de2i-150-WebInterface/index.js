@@ -2,7 +2,7 @@ const socket = new WebSocket("ws://localhost:3001");
 
 socket.addEventListener('open', function (event) {
 
-    socket.send('Fdsunfando');
+    socket.send('Client connected to server');
 
 });
 
@@ -24,7 +24,7 @@ SWITCH_TURN_OFF_IMG = "images/BlackRect.png";
 
 document.addEventListener('DOMContentLoaded', ()=> {
     initInterface();
-    console.log(last_state);
+    console.log(JSON.stringify(last_state));
 })
 
 

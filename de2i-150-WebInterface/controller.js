@@ -91,6 +91,8 @@ const RedLeds = {
         } else {
             RedLeds.turnOn(index);
         }
+
+        socket.send(`red_led_${index}`)
     }
 }
 

@@ -27,7 +27,7 @@ const Switches = {
     
     update: (state) => {
         for(let i = 0; i < state.length; i++) {
-            if(state[i] == 1) {
+            if(state[i] != 0) {
                 Switches.turnOn(i);
             } else {
                 Switches.turnOff(i);

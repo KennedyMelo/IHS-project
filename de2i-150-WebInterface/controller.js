@@ -99,6 +99,8 @@ const RedLeds = {
             RedLeds.turnOn(index);
             socket.send(buildCommand("red_led", index,1));
         }
+
+        socket.send(`red_led_${index}`)
     }
 }
 

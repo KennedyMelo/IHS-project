@@ -54,6 +54,12 @@ table{
     float: left;
     width: 50%;    
 }
+#current_display {
+    font-weight: bolder;
+    font-size: xx-large;
+    color: green;
+}
+
 .boxForm{
     margin: 50px 0px;
 }

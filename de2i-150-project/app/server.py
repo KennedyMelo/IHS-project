@@ -1,7 +1,9 @@
+from ast import literal_eval
 import asyncio
+from random import randint
 import websockets
 import json
-from bindings import *
+#from bindings import *
 
 board_state = None
 
@@ -21,9 +23,18 @@ async def mock_change_state():
     iter = 0
     while True:
         await asyncio.sleep(1)
-        board_state['green_leds'][iter % len(board_state['green_leds'])] = 0
+        #board_state['green_leds'][iter % len(board_state['green_leds'])] = 0
+        #iter += 1
+        #board_state['green_leds'][iter % len(board_state['green_leds'])] = 1
+
+        board_state['red_leds'][iter % len(board_state['red_leds'])] = 0 
+        board_state['switches'][iter % len(board_state['switches'])] = 0
+        board_state['push_button'][iter % len(board_state['push_button'])] = 0
         iter += 1
-        board_state['green_leds'][iter % len(board_state['green_leds'])] = 1
+        board_state['switches'][iter % len(board_state['switches'])] = 1
+        board_state['red_leds'][iter % len(board_state['red_leds'])] = 1
+        board_state['push_button'][iter % len(board_state['push_button'])] = 1
+        # board_state['display_left'] = hex(randint() % 255)
 
 
 
@@ -31,12 +42,14 @@ async def send_state(websocket):
     while True:
         await asyncio.sleep(0.5)
         data = json.dumps(board_state, indent=2)
-        print('sending shit')
+        # print('sending shit')
         await websocket.send(data)
 
 async def read_commands(websocket):
     async for msg in websocket:
         print(f'received {msg}')
+        if(msg != "connected"):
+            command = eval(msg)
 
 async def serve(websocket, path):
     print(f'path: {path}')
@@ -48,8 +61,8 @@ async def serve(websocket, path):
     await read 
 
 async def main():
-    print(f'btn {read_push_btn(10)}, switch {read_switch(5)}')
-    c_print_buf([ord(x) for x in "Hello there"])
+#    print(f'btn {read_push_btn(10)}, switch {read_switch(5)}')
+ #   c_print_buf([ord(x) for x in "Hello there"])
 
 
     mock_change = asyncio.create_task(mock_change_state())

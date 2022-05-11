@@ -1,25 +1,17 @@
 const socket = new WebSocket("ws://localhost:3001");
 
 socket.addEventListener('open', function (event) {
-
-    socket.send('Fdsunfando');
-
+    socket.send('connected');
 });
-
 
 let last_state = null; 
 socket.addEventListener('message', function (event) {
-    last_state = JSON.parse(event.data)
+    last_state = JSON.parse(event.data);
     updateInterface(); 
 });
 socket.onerror = function(error) {
   alert(`[error] ${error.message}`);
 };
-
-SWITCH_TURN_ON_IMG = "images/GreenRect.png"; 
-SWITCH_TURN_OFF_IMG = "images/BlackRect.png"; 
-
-
 
 
 document.addEventListener('DOMContentLoaded', ()=> {
@@ -30,17 +22,22 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
 function updateInterface() {
     if(last_state == null) return; 
-    Switches.updateSwitches(last_state["switches"]);
+    Switches.update(last_state["switches"]);
     //RedLeds.update(last_state["red_leds"]);
     PushButtons.update(last_state["push_button"]);
     SDisplaySegmentOutp.setText(last_state["display_left"]);
 }
 
 function initInterface() {
-    Switches.turnOffAllSwitches();
+    Switches.turnOffAll();
     RedLeds.turnAll("off");
     PushButtons.activate(0);
     PushButtons.setAll(PushButtons.deactivate);
-    SDisplaySegmentOutp.getElement();
+    SDisplaySegmentOutp.setText("");
+    console.log(GreenLeds.getElement(0)); 
+    console.log(GreenLeds.getElement(10)); 
+    console.log(GreenLeds.getElement(16)); 
+    GreenLeds.setAll(GreenLeds.turnOff); 
+
 }
 

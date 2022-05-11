@@ -3,7 +3,7 @@ import asyncio
 from random import randint
 import websockets
 import json
-#from bindings import *
+from bindings import *
 
 board_state = None
 
@@ -22,18 +22,27 @@ def build_state():
 async def mock_change_state():
     iter = 0
     while True:
-        await asyncio.sleep(1)
+        await asyncio.sleep(0.1)
         #board_state['green_leds'][iter % len(board_state['green_leds'])] = 0
         #iter += 1
         #board_state['green_leds'][iter % len(board_state['green_leds'])] = 1
+        for sw in range(0, len(board_state['switches'])):
+            board_state['switches'][sw] = read_switch(sw)
+        
+        for ps in range(0, len(board_state['push_button'])):
+            board_state['push_button'][ps] = read_push_btn(ps)
+        
+        set_red_leds(board_state['red_leds'])
+        set_green_leds(board_state['green_leds'])
+        write_display(board_state['display_left'], False)
 
-        board_state['red_leds'][iter % len(board_state['red_leds'])] = 0 
-        board_state['switches'][iter % len(board_state['switches'])] = 0
-        board_state['push_button'][iter % len(board_state['push_button'])] = 0
-        iter += 1
-        board_state['switches'][iter % len(board_state['switches'])] = 1
-        board_state['red_leds'][iter % len(board_state['red_leds'])] = 1
-        board_state['push_button'][iter % len(board_state['push_button'])] = 1
+        #board_state['red_leds'][iter % len(board_state['red_leds'])] = 0 
+        #board_state['switches'][iter % len(board_state['switches'])] = 0
+        #board_state['push_button'][iter % len(board_state['push_button'])] = 0
+        #iter += 1
+        #board_state['switches'][iter % len(board_state['switches'])] = 1
+        #board_state['red_leds'][iter % len(board_state['red_leds'])] = 1
+        #board_state['push_button'][iter % len(board_state['push_button'])] = 1
 
 
 
@@ -47,6 +56,9 @@ async def send_state(websocket):
 def executeCommand(command):
     if(command["component"] == 'display_left'):
         board_state['display_left'] = command['state']
+    #if(command["component"] == 'green_leds'):
+        
+    
 
 async def read_commands(websocket):
     async for msg in websocket:
@@ -68,12 +80,13 @@ async def main():
 #    print(f'btn {read_push_btn(10)}, switch {read_switch(5)}')
  #   c_print_buf([ord(x) for x in "Hello there"])
 
-
+    init_io()
     mock_change = asyncio.create_task(mock_change_state())
 
     async with websockets.serve(serve, "localhost", 3001):
         await asyncio.Future()  # run forever
         await mock_change
+    end_io()
 
 if __name__ == '__main__':
     board_state = build_state()

@@ -111,20 +111,28 @@ const GreenLeds = {
         let green_leds_rows = document.getElementById("greenLeds").getElementsByTagName("tr");
         let green_led_row; 
         let row_len = 5;
+        let flag = 0;
         if(index < 5) {
             green_led_row = green_leds_rows[0].getElementsByTagName("td");
+            flag = 0;
         }
         else if(index < 10) {
             green_led_row = green_leds_rows[1].getElementsByTagName("td");
+            flag = 0;
         }
         else if(index < 15) {
             green_led_row = green_leds_rows[2].getElementsByTagName("td");
+            flag = 0;
         }
         else {
             green_led_row = green_leds_rows[3].getElementsByTagName("td");
             row_len = 2; 
+            flag = 1;
         }
-        return  green_led_row[index % row_len].getElementsByTagName("div")[0];
+        if(!flag)
+            return  green_led_row[index % row_len].getElementsByTagName("div")[0];
+        else
+            return green_led_row[(index + 1) % row_len].getElementsByTagName("div")[0]; 
     }, 
     turnOff : (index) => {
         let green_led = GreenLeds.getElement(index); 

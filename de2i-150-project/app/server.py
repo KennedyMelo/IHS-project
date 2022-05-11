@@ -34,7 +34,6 @@ async def mock_change_state():
         board_state['switches'][iter % len(board_state['switches'])] = 1
         board_state['red_leds'][iter % len(board_state['red_leds'])] = 1
         board_state['push_button'][iter % len(board_state['push_button'])] = 1
-        # board_state['display_left'] = hex(randint() % 255)
 
 
 
@@ -45,11 +44,16 @@ async def send_state(websocket):
         # print('sending shit')
         await websocket.send(data)
 
+def executeCommand(command):
+    if(command["component"] == 'display_left'):
+        board_state['display_left'] = command['state']
+
 async def read_commands(websocket):
     async for msg in websocket:
         print(f'received {msg}')
         if(msg != "connected"):
             command = eval(msg)
+            executeCommand(command)
 
 async def serve(websocket, path):
     print(f'path: {path}')

@@ -19,6 +19,9 @@ body{
 .boxHeight{
     height: 180px;
 }
+.boxHeightLeds{
+    height: 240px;
+}
 .boxWidth{
     width: 45%;
 }

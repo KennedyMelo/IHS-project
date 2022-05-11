@@ -42,6 +42,10 @@ function updateInterface() {
     //RedLeds.update(last_state["red_leds"]);
     PushButtons.update(last_state["push_button"]);
     SDisplaySegmentOutp.setText(last_state["display_left"]);
+
+    RedLeds.update(last_state["red_leds"])
+    GreenLeds.update(last_state["green_leds"])
+    
 }
 
 function initInterface() {

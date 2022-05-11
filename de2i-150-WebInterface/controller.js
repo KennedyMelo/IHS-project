@@ -20,7 +20,7 @@ const Switches = {
     }, 
 
     turnOffAll: () =>  {
-        for(let i = 0; i < 17; i++) {
+        for(let i = 0; i < 18; i++) {
             Switches.turnOff(i);
         }
     },
@@ -104,18 +104,21 @@ const RedLeds = {
 
 
 const GreenLeds = {
+
     status : new Array(8),
+
     getElement : (index) => {
         const greenLedsTable = document.getElementById("greenLeds");
         let led_row = greenLedsTable.getElementsByTagName("tr")[index < 4 ? 0 : 1];
         let led = led_row.getElementsByTagName("td")[index % 4]; 
         return led.getElementsByTagName("div")[0];
     },
+
     turnOff : (index) => {
         GreenLeds.status[index] = 0;
         let led = GreenLeds.getElement(index); 
-        if(led.classList.contains("green")) {
-            led.classList.remove("green"); 
+        if(led.classList.contains("lightGreen")) {
+            led.classList.remove("lightGreen"); 
             led.classList.add("darkGreen");
         }
     }, 
@@ -125,12 +128,12 @@ const GreenLeds = {
         let led = GreenLeds.getElement(index);
         if(led.classList.contains("darkGreen")) {
             led.classList.remove("darkGreen");
-            led.classList.add("green");
+            led.classList.add("lightGreen");
         }
     },
     isOn : (index) => {
         let led = GreenLeds.getElement(index);
-        if(led.classList.contains("green")) {
+        if(led.classList.contains("lightGreen")) {
             return true;
         }
         return false;

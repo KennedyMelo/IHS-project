@@ -37,11 +37,12 @@ const Switches = {
 }
 
 const RedLeds = {
-    status : new Array(8),
+    status : new Array(18),
     getElement : (index) => {
         const redLedsTable = document.getElementById("redLeds");
-        let led_row = redLedsTable.getElementsByTagName("tr")[(index >= 4)? 1:0];
-        let led = led_row.getElementsByTagName("td")[index % 4]; 
+        let led_row = redLedsTable.getElementsByTagName("tr")[(index < 5) ? 0 : (index < 10) ? 1 : (index < 15) ? 2 : 3];
+       // let led_row = redLedsTable.getElementsByTagName("tr")[index >= 5 ? 1 : 0];
+        let led = led_row.getElementsByTagName("td")[index % 5]; 
         return led.getElementsByTagName("div")[0];
     },
     turnOff : (index) => {
@@ -72,7 +73,7 @@ const RedLeds = {
     },
 
     turnAll : (state) => {
-        for(let i = 0; i < 8; i++) {
+        for(let i = 0; i < 18; i++) {
             if(state.toLowerCase() == "off") {
                 RedLeds.turnOff(i);
             } else {
@@ -104,73 +105,76 @@ const RedLeds = {
     }
 }
 
+
 const GreenLeds = {
-    OffColor : "darkGreen", 
-    OnColor : "lightGreen", 
+    status : new Array(8),
     getElement : (index) => {
-        let green_leds_rows = document.getElementById("greenLeds").getElementsByTagName("tr");
-        let green_led_row; 
-        let row_len = 5;
-        let flag = 0;
-        if(index < 5) {
-            green_led_row = green_leds_rows[0].getElementsByTagName("td");
-            flag = 0;
-        }
-        else if(index < 10) {
-            green_led_row = green_leds_rows[1].getElementsByTagName("td");
-            flag = 0;
-        }
-        else if(index < 15) {
-            green_led_row = green_leds_rows[2].getElementsByTagName("td");
-            flag = 0;
-        }
-        else {
-            green_led_row = green_leds_rows[3].getElementsByTagName("td");
-            row_len = 2; 
-            flag = 1;
-        }
-        if(!flag)
-            return  green_led_row[index % row_len].getElementsByTagName("div")[0];
-        else
-            return green_led_row[(index + 1) % row_len].getElementsByTagName("div")[0]; 
-    }, 
-    turnOff : (index) => {
-        let green_led = GreenLeds.getElement(index); 
-        if(green_led.classList.contains(GreenLeds.OnColor)) {
-            green_led.classList.remove(GreenLeds.OnColor); 
-            green_led.classList.add(GreenLeds.OffColor); 
-        }
+        const grenLedsTable = document.getElementById("greenLeds");
+        let led_row = greenLedsTable.getElementsByTagName("tr")[index < 4 ? 0 : 1];
+        let led = led_row.getElementsByTagName("td")[index % 4]; 
+        return led.getElementsByTagName("div")[0];
     },
+    turnOff : (index) => {
+        GreenLeds.status[index] = 0;
+        console.log(GreenLeds.status);
+        let led = GreenLeds.getElement(index); 
+        if(led.classList.contains("green")) {
+            led.classList.remove("green"); 
+            led.classList.add("darkGreen");
+        }
+    }, 
+
     turnOn : (index) => {
-        let green_led = GreenLeds.getElement(index); 
-        if(green_led.classList.contains(GreenLeds.OffColor)) {
-            green_led.classList.remove(GreenLeds.OffColor); 
-            green_led.classList.add(GreenLeds.OnColor); 
+        GreenLeds.status[index] = 1;
+        console.log(GreenLeds.status);
+        let led = GreenLeds.getElement(index);
+        if(led.classList.contains("darkGreen")) {
+            led.classList.remove("darkGreen");
+            led.classList.add("green");
         }
     },
     isOn : (index) => {
-        if(GreenLeds.getElement(index).classList.contains(GreenLeds.OnColor)) {
+        let led = GreenLeds.getElement(index);
+        if(led.classList.contains("green")) {
             return true;
         }
-        return false; 
+        return false;
     },
-    setAll : (func) => {
-        for(let i = 0; i < 17; i++) {
-            func(i); 
+
+    turnAll : (state) => {
+        for(let i = 0; i < 8; i++) {
+            if(state.toLowerCase() == "off") {
+                GreenLeds.turnOff(i);
+            } else {
+                GreenLeds.turnOn(i); 
+            }
         }
     }, 
+
+    update : (state) => {
+        for(let i = 0; i < state.length; i++) {
+            if(state[i] == 1) {
+                GreenLeds.turnOn(i);
+            } else {
+                GreenLeds.turnOff(i);
+            }
+        }
+    },
+
     switch : (index) => {
-        let new_state = 0; 
+        let new_state;
         if(GreenLeds.isOn(index)) {
             GreenLeds.turnOff(index);
             new_state = 0;
         } else {
             GreenLeds.turnOn(index);
-            new_state = 1;  
+            new_state = 1;
         }
-        socket.send(buildCommand("green_led", index,new_state));
+        socket.send(buildCommand("green_leds",index, new_state));
     }
 }
+
+
 
 const PushButtons = {
     getElement : (index) => {

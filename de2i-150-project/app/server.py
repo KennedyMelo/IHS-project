@@ -11,8 +11,8 @@ board_state = None
 def build_state():
     s = {}
 
-    s['green_leds'] = [0 for _ in range(0, 17)]
-    s['red_leds'] = [0 for _ in range(0, 8)]
+    s['green_leds'] = [0 for _ in range(0, 8)]
+    s['red_leds'] = [0 for _ in range(0, 18)]
     s['push_button'] = [0 for _ in range(0, 4)]
     s['switches'] = [0 for _ in range(0, 17)]
     s['display_left'] = 0xff

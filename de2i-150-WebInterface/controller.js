@@ -41,13 +41,11 @@ const RedLeds = {
     getElement : (index) => {
         const redLedsTable = document.getElementById("redLeds");
         let led_row = redLedsTable.getElementsByTagName("tr")[(index < 5) ? 0 : (index < 10) ? 1 : (index < 15) ? 2 : 3];
-       // let led_row = redLedsTable.getElementsByTagName("tr")[index >= 5 ? 1 : 0];
         let led = led_row.getElementsByTagName("td")[index % 5]; 
         return led.getElementsByTagName("div")[0];
     },
     turnOff : (index) => {
         RedLeds.status[index] = 0;
-        console.log(RedLeds.status);
         let led = RedLeds.getElement(index); 
         if(led.classList.contains("red")) {
             led.classList.remove("red"); 
@@ -57,7 +55,6 @@ const RedLeds = {
 
     turnOn : (index) => {
         RedLeds.status[index] = 1;
-        console.log(RedLeds.status);
         let led = RedLeds.getElement(index);
         if(led.classList.contains("darkRed")) {
             led.classList.remove("darkRed");
@@ -73,7 +70,7 @@ const RedLeds = {
     },
 
     turnAll : (state) => {
-        for(let i = 0; i < 18; i++) {
+        for(let i = 0; i < 17; i++) {
             if(state.toLowerCase() == "off") {
                 RedLeds.turnOff(i);
             } else {
@@ -109,14 +106,13 @@ const RedLeds = {
 const GreenLeds = {
     status : new Array(8),
     getElement : (index) => {
-        const grenLedsTable = document.getElementById("greenLeds");
+        const greenLedsTable = document.getElementById("greenLeds");
         let led_row = greenLedsTable.getElementsByTagName("tr")[index < 4 ? 0 : 1];
         let led = led_row.getElementsByTagName("td")[index % 4]; 
         return led.getElementsByTagName("div")[0];
     },
     turnOff : (index) => {
         GreenLeds.status[index] = 0;
-        console.log(GreenLeds.status);
         let led = GreenLeds.getElement(index); 
         if(led.classList.contains("green")) {
             led.classList.remove("green"); 
@@ -126,7 +122,6 @@ const GreenLeds = {
 
     turnOn : (index) => {
         GreenLeds.status[index] = 1;
-        console.log(GreenLeds.status);
         let led = GreenLeds.getElement(index);
         if(led.classList.contains("darkGreen")) {
             led.classList.remove("darkGreen");

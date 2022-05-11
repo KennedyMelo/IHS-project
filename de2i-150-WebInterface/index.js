@@ -28,7 +28,15 @@ document.addEventListener('DOMContentLoaded', ()=> {
 })
 
 
+function send7SegmentText(e){
+        e.preventDefault()
+        socket.send(document.getElementById("7SdisplayForm").value)
+}
+
+
+
 function updateInterface() {
+
     if(last_state == null) return; 
     Switches.updateSwitches(last_state["switches"]);
     //RedLeds.update(last_state["red_leds"]);

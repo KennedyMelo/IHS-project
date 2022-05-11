@@ -92,15 +92,15 @@ const RedLeds = {
     },
 
     switch : (index) => {
+        let new_state;
         if(RedLeds.isOn(index)) {
             RedLeds.turnOff(index);
-            socket.send(buildCommand("red_led",index,0)); 
+            new_state = 0;
         } else {
             RedLeds.turnOn(index);
-            socket.send(buildCommand("red_led", index,1));
+            new_state = 1;
         }
-
-        socket.send(`red_led_${index}`)
+        socket.send(buildCommand("red_leds",index, new_state));
     }
 }
 

@@ -2,7 +2,7 @@ const socket = new WebSocket("ws://localhost:3001");
 
 socket.addEventListener('open', function (event) {
 
-    socket.send('Client connected to server');
+    socket.send('connected');
 
 });
 
@@ -23,8 +23,14 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
 
 function send7SegmentText(e){
-        e.preventDefault()
-        socket.send(document.getElementById("7SdisplayForm").value)
+        e.preventDefault();
+        console.log("sending new txt");
+        console.log("SevenSegment",document.getElementById("7SdisplayForm").value);
+        socket.send(buildCommand(
+            "display_left", 
+            0,document.getElementById("7SdisplayForm").value
+        ))
+        document.getElementById("7SdisplayForm").value = "";
 }
 
 

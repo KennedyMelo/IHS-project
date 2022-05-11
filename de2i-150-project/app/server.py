@@ -1,5 +1,6 @@
 from ast import literal_eval
 import asyncio
+from msilib.schema import Component
 from random import randint
 import websockets
 import json
@@ -56,7 +57,8 @@ async def send_state(websocket):
 def executeCommand(command):
     if(command["component"] == 'display_left'):
         board_state['display_left'] = command['state']
-    #if(command["component"] == 'green_leds'):
+    else:
+        board_state[command['component']][command['index']] = command['state']    
         
     
 

@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 function updateInterface() {
     if(last_state == null) return; 
     Switches.updateSwitches(last_state["switches"]);
-    RedLeds.update(last_state["red_leds"]);
+    //RedLeds.update(last_state["red_leds"]);
     PushButtons.update(last_state["push_button"]);
     SDisplaySegmentOutp.setText(last_state["display_left"]);
 }

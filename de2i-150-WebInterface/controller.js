@@ -58,6 +58,13 @@ const RedLeds = {
             led.classList.add("red");
         }
     },
+    isOn : (index) => {
+        let led = RedLeds.getElement(index);
+        if(led.classList.contains("red")) {
+            return true;
+        }
+        return false;
+    },
 
     turnAll : (state) => {
         for(let i = 0; i < 8; i++) {
@@ -76,6 +83,13 @@ const RedLeds = {
             } else {
                 RedLeds.turnOff(i);
             }
+        }
+    },
+    switch : (index) => {
+        if(RedLeds.isOn(index)) {
+            RedLeds.turnOff(index);
+        } else {
+            RedLeds.turnOn(index);
         }
     }
 }

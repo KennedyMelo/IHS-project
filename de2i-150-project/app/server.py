@@ -1,6 +1,6 @@
 from ast import literal_eval
 import asyncio
-from msilib.schema import Component
+#from msilib.schema import Component
 from random import randint
 import websockets
 import json

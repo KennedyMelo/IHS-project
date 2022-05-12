@@ -38,6 +38,22 @@ def concatena_bytes(l):
     return soma & 0xffffffff
 
 def generate_final_value(initial_string_with_value):
+
+    bitmask = {
+        '0': [1,0,0,0,0,0,0],
+        '1': [1,1,1,1,0,0,1],
+        '2': [0,1,0,0,1,0,0],
+        '3': [0,1,1,0,0,0,0],
+        '4': [0,0,1,1,0,0,1],
+        '5': [0,0,1,0,0,1,0],
+        '6': [0,0,0,0,0,1,0],
+        '7': [1,1,1,1,0,0,0],
+        '8': [0,0,0,0,0,0,0],
+        '9': [0,0,1,1,0,0,0],
+    }
+
+
+
     vector_with_chars = [ char for char in initial_string_with_value]
     vector_with_chars.reverse()
     lista_de_bytes = map(bitmask_to_int,[bitmask[item] for item in vector_with_chars]) 
@@ -46,28 +62,10 @@ def generate_final_value(initial_string_with_value):
 
 
 
-def write_display_CORRECTED(arg1, arg2):
+def write_display_CORRECTED():
 
-    print("oi")
-
-    '''
-    bitmask = {
-        '0': [1,1,1,1,1,1,0],
-        '1': [0,1,1,0,0,0,0],
-        '2': [1,1,0,1,1,0,1],
-        '3': [1,1,1,1,0,0,1],
-        '4': [0,1,1,0,0,1,1],
-        '5': [1,0,1,1,0,1,1],
-        '6': [1,0,1,1,1,1,1],
-        '7': [1,1,1,0,0,0,0],
-        '8': [1,1,1,1,1,1,1],
-        '9': [1,1,1,1,0,1,1],
-    }
-    '''
-
-
-
-    initial_string_with_value ="12345678"
+    #initial_string_with_value ="12345678"
+    initial_string_with_value ="9"
 
     slice_0 = initial_string_with_value[int(len(initial_string_with_value)/2):]
     slice_1 = initial_string_with_value[:int(len(initial_string_with_value)/2)]
@@ -76,7 +74,7 @@ def write_display_CORRECTED(arg1, arg2):
     value_1 = generate_final_value(slice_1)
 
     write_display(value_0, False)
-    write_display(value_1, True)
+    #write_display(value_1, True)
 
 def build_state():
     s = {}
@@ -106,7 +104,7 @@ async def mock_change_state():
         set_red_leds(board_state['red_leds'])
         set_green_leds(board_state['green_leds'])
         #write_display(board_state['display_left'], False)
-        #write_display_CORRECTED(board_state['display_left'], False)
+        write_display_CORRECTED()
 
 
         #board_state['red_leds'][iter % len(board_state['red_leds'])] = 0 

@@ -65,18 +65,19 @@ def generate_final_value(initial_string_with_value):
 def write_display_CORRECTED():
 
     #initial_string_with_value ="12345678"
-    initial_string_with_value = "5555"
+    initial_string_with_value = "99999999"
 
-    value_final = generate_final_value(initial_string_with_value)
+    #value_final = generate_final_value(initial_string_with_value)
 
-    #slice_0 = initial_string_with_value[int(len(initial_string_with_value)/2):]
-    #slice_1 = initial_string_with_value[:int(len(initial_string_with_value)/2)]
+    slice_0 = initial_string_with_value[int(len(initial_string_with_value)/2):]
+    slice_1 = initial_string_with_value[:int(len(initial_string_with_value)/2)]
 
-    #value_0 = generate_final_value(slice_0)
-    #value_1 = generate_final_value(slice_1)
+    value_0 = generate_final_value(slice_0)
+    value_1 = generate_final_value(slice_1)
 
-    write_display(value_final, False)
-    #write_display(value_1, True)
+    #write_display(value_final, False)
+    write_display(value_0, False)
+    write_display(value_1, True)
 
 def build_state():
     s = {}

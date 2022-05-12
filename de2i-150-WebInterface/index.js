@@ -42,7 +42,6 @@ function updateInterface() {
     //RedLeds.update(last_state["red_leds"]);
     PushButtons.update(last_state["push_button"]);
     SDisplaySegmentOutp.setText(last_state["display_left"]);
-    console.log("last_state['switches']: ",last_state["switches"]);
     RedLeds.update(last_state["red_leds"])
     GreenLeds.update(last_state["green_leds"])
     
@@ -57,9 +56,6 @@ function initInterface() {
     PushButtons.activate(0);
     PushButtons.setAll(PushButtons.deactivate);
     SDisplaySegmentOutp.setText("");
-    //console.log(GreenLeds.getElement(0)); 
-    //console.log(GreenLeds.getElement(10)); 
-    //console.log(GreenLeds.getElement(16)); 
 
 
 

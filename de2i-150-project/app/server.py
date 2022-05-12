@@ -58,26 +58,41 @@ def generate_final_value(initial_string_with_value):
     vector_with_chars.reverse()
     lista_de_bytes = map(bitmask_to_int,[bitmask[item] for item in vector_with_chars]) 
     value = concatena_bytes(lista_de_bytes) 
-    return value
+    return value & 0xffffffff
 
 
 
-def write_display_CORRECTED():
+def write_display_CORRECTED(string_with_4_digits):
 
-    #initial_string_with_value ="12345678"
-    initial_string_with_value = "99999999"
+    initial_string_with_value = string_with_4_digits
+    #initial_string_with_value ="9269"
+    #initial_string_with_value = "9999"
 
-    #value_final = generate_final_value(initial_string_with_value)
+    # pega só os 4 primeiros dígitos
+    initial_string_with_value = initial_string_with_value[:4 if (len(initial_string_with_value)>4) else len(initial_string_with_value) ]
+    print(f"writing {initial_string_with_value} on left 7 segment display")
 
-    slice_0 = initial_string_with_value[int(len(initial_string_with_value)/2):]
-    slice_1 = initial_string_with_value[:int(len(initial_string_with_value)/2)]
+    # adiciona zeros à esquerda
+    if(len(initial_string_with_value) < 4):
+        initial_string_with_value = "0"*(4-len(initial_string_with_value)) + initial_string_with_value
+        print(f"(actually printing {initial_string_with_value})")
+    
 
-    value_0 = generate_final_value(slice_0)
-    value_1 = generate_final_value(slice_1)
+    #slice_0 = initial_string_with_value[int(len(initial_string_with_value)/2):]
+    #slice_1 = initial_string_with_value[:int(len(initial_string_with_value)/2)]
+
+    value_final = generate_final_value(initial_string_with_value)
+
+    # faz as mágicas pra deixar no formato certo 
+    #value_0 = generate_final_value(slice_0)
+    #value_1 = generate_final_value(slice_1)
 
     #write_display(value_final, False)
-    write_display(value_0, False)
-    write_display(value_1, True)
+
+    # passa para a função de write no display
+    write_display(value_final, False)
+    #write_display(value_0, False)
+    #write_display(value_1, True)
 
 def build_state():
     s = {}
@@ -107,7 +122,8 @@ async def mock_change_state():
         set_red_leds(board_state['red_leds'])
         set_green_leds(board_state['green_leds'])
         #write_display(board_state['display_left'], False)
-        write_display_CORRECTED()
+        #print(board_state['display_left'])
+        write_display_CORRECTED(str(board_state['display_left']))
 
 
         #board_state['red_leds'][iter % len(board_state['red_leds'])] = 0 
@@ -124,7 +140,7 @@ async def send_state(websocket):
     while True:
         await asyncio.sleep(0.5)
         data = json.dumps(board_state, indent=2)
-        # print('sending shit')
+        #print('sending shit')
         await websocket.send(data)
 
 def executeCommand(command):
@@ -137,7 +153,7 @@ def executeCommand(command):
 
 async def read_commands(websocket):
     async for msg in websocket:
-        print(f'received {msg}')
+        print(f'received: {msg}')
         if(msg != "connected"):
             command = eval(msg)
             executeCommand(command)

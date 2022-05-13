@@ -1,5 +1,5 @@
 function buildCommand(component, index, state) {
     return `{"component": "${component}", 
-        "index" :${index}, 
+        "index" : ${index}, 
         "state" : ${state}}`; 
 }

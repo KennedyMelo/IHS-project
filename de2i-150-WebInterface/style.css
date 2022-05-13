@@ -51,6 +51,7 @@ table{
     padding: 5px 35px;
 }
 #ledsBox td{
+    select: none;
     padding: 4px 8px;
 }
 #greenLedsDiv{
@@ -83,11 +84,14 @@ input{
     border: none;
 }
 .circle{
+    select: none;
+    cursor: pointer;
     width: 35px;
     height: 35px;
     border-radius: 50%;
 }
 .circleBorder{
+    select: none;
     width: 18px;
     height: 18px;
     border-radius: 50%;

@@ -18,14 +18,14 @@ socket.onerror = function(error) {
 
 document.addEventListener('DOMContentLoaded', ()=> {
     initInterface();
-    console.log(JSON.stringify(last_state));
+    //console.log(JSON.stringify(last_state));
 })
 
 
 function send7SegmentText(e){
         e.preventDefault();
-        console.log("sending new txt");
-        console.log("SevenSegment",document.getElementById("7SdisplayForm").value);
+        //console.log("sending new txt");
+        //console.log("SevenSegment",document.getElementById("7SdisplayForm").value);
         socket.send(buildCommand(
             "display_left", 
             0,document.getElementById("7SdisplayForm").value
@@ -42,18 +42,22 @@ function updateInterface() {
     //RedLeds.update(last_state["red_leds"]);
     PushButtons.update(last_state["push_button"]);
     SDisplaySegmentOutp.setText(last_state["display_left"]);
+    RedLeds.update(last_state["red_leds"])
+    GreenLeds.update(last_state["green_leds"])
+    
 }
 
 function initInterface() {
     Switches.turnOffAll();
     RedLeds.turnAll("off");
+    GreenLeds.turnAll("off"); 
+    //GreenLeds.setAll(GreenLeds.turnOff); 
+
     PushButtons.activate(0);
     PushButtons.setAll(PushButtons.deactivate);
     SDisplaySegmentOutp.setText("");
-    console.log(GreenLeds.getElement(0)); 
-    console.log(GreenLeds.getElement(10)); 
-    console.log(GreenLeds.getElement(16)); 
-    GreenLeds.setAll(GreenLeds.turnOff); 
+
+
 
 }
 
